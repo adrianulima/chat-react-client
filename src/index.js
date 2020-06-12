@@ -1,6 +1,3 @@
-import React from 'react'
-import styles from './styles.module.css'
-
-export const ExampleComponent = ({ text }) => {
-  return <div className={styles.test}>Example Component: {text}</div>
-}
+export { default as ChatWindow } from './components/ChatWindow'
+export { default as ChatButton } from './components/ChatButton'
+export { default as ChatWrapper } from './components/ChatWrapper'
