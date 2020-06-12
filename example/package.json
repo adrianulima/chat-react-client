@@ -14,6 +14,7 @@
     "chat-react-client": "file:..",
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
+    "react-icons": "^3.10.0",
     "react-scripts": "file:../node_modules/react-scripts",
     "reactstrap": "^8.4.1"
   },

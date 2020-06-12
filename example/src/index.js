@@ -1,5 +1,6 @@
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'chat-react-client/dist/index.css'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
