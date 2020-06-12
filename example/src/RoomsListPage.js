@@ -16,7 +16,7 @@ import RoomForm from './components/RoomForm'
 
 import { map } from 'lodash'
 
-const id = [
+const idsRooms = [
   '#235561',
   '#235561',
   '#235561',
@@ -78,7 +78,7 @@ const RoomsListPage = () => {
       </Row>
 
       <Row className="mt-4">
-        {map(id, (id) => {
+        {map(idsRooms, (id) => {
           return (
             <Col lg="4" md="6" sm="12" className="mb-4">
               <Card style={{ height: 120 }}>
