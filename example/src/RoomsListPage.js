@@ -16,25 +16,7 @@ import RoomForm from './components/RoomForm'
 
 import { map } from 'lodash'
 
-const idsRooms = [
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-  '#235561',
-]
+const idsRooms = ['#1234', '#2345', '#3456', '#4567', '#5678', '#6789', '#7890']
 
 const RoomsListPage = () => {
   const [isNewModalOpen, setIsNewModalOpen] = useState(false)
@@ -80,7 +62,7 @@ const RoomsListPage = () => {
       <Row className="mt-4">
         {map(idsRooms, (id) => {
           return (
-            <Col lg="4" md="6" sm="12" className="mb-4">
+            <Col key={id} lg="4" md="6" sm="12" className="mb-4">
               <Card style={{ height: 120 }}>
                 <CardBody>
                   <CardTitle>{id}</CardTitle>
