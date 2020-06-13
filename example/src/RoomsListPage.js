@@ -19,8 +19,8 @@ import RoomForm from './components/RoomForm'
 import { map } from 'lodash'
 
 const rooms = [
-  { roomId: 1234, size: 6, users: ['1', '2'], password: '1234' },
-  { roomId: 2345, size: 3, users: ['3'], password: '1234' },
+  { roomId: 1234, size: 6, users: ['1', '2'], protected: true },
+  { roomId: 2345, size: 3, users: ['3'], protected: true },
   { roomId: 3456, size: 4, users: ['4'] },
   { roomId: 4567, size: 6, users: [] },
   { roomId: 5678, size: 6, users: [] },
@@ -83,7 +83,7 @@ const RoomsListPage = () => {
                       alignItems: 'center',
                     }}>
                     {room.users.length}/{room.size}
-                    {room.password ? (
+                    {room.protected ? (
                       <BsFillLockFill size="20px" />
                     ) : (
                       <BsFillUnlockFill size="20px" />
