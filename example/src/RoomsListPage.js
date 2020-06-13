@@ -8,8 +8,15 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Card,
+  CardTitle,
+  CardBody,
 } from 'reactstrap'
 import RoomForm from './components/RoomForm'
+
+import { map } from 'lodash'
+
+const idsRooms = ['#1234', '#2345', '#3456', '#4567', '#5678', '#6789', '#7890']
 
 const RoomsListPage = () => {
   const [isNewModalOpen, setIsNewModalOpen] = useState(false)
@@ -28,7 +35,7 @@ const RoomsListPage = () => {
 
   return (
     <Container>
-      <Row className="float-right">
+      <Row className="text-right">
         <Col>
           <Button color="primary" onClick={toggle}>
             New room
@@ -50,6 +57,20 @@ const RoomsListPage = () => {
             </ModalFooter>
           </Modal>
         </Col>
+      </Row>
+
+      <Row className="mt-4">
+        {map(idsRooms, (id) => {
+          return (
+            <Col key={id} lg="4" md="6" sm="12" className="mb-4">
+              <Card style={{ height: 120 }}>
+                <CardBody>
+                  <CardTitle>{id}</CardTitle>
+                </CardBody>
+              </Card>
+            </Col>
+          )
+        })}
       </Row>
     </Container>
   )
