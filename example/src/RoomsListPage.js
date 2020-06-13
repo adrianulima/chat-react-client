@@ -11,12 +11,22 @@ import {
   Card,
   CardTitle,
   CardBody,
+  CardText,
 } from 'reactstrap'
+import { BsFillLockFill, BsFillUnlockFill } from 'react-icons/bs'
 import RoomForm from './components/RoomForm'
 
 import { map } from 'lodash'
 
-const idsRooms = ['#1234', '#2345', '#3456', '#4567', '#5678', '#6789', '#7890']
+const rooms = [
+  { roomId: 1234, size: 6, users: ['1', '2'], password: '1234' },
+  { roomId: 2345, size: 3, users: ['3'], password: '1234' },
+  { roomId: 3456, size: 4, users: ['4'] },
+  { roomId: 4567, size: 6, users: [] },
+  { roomId: 5678, size: 6, users: [] },
+  { roomId: 6789, size: 6, users: [] },
+  { roomId: 7890, size: 6, users: [] },
+]
 
 const RoomsListPage = () => {
   const [isNewModalOpen, setIsNewModalOpen] = useState(false)
@@ -60,12 +70,25 @@ const RoomsListPage = () => {
       </Row>
 
       <Row className="mt-4">
-        {map(idsRooms, (id) => {
+        {map(rooms, (room) => {
           return (
-            <Col key={id} lg="4" md="6" sm="12" className="mb-4">
+            <Col key={room.roomId} lg="4" md="6" sm="12" className="mb-4">
               <Card style={{ height: 120 }}>
                 <CardBody>
-                  <CardTitle>{id}</CardTitle>
+                  <CardTitle>#{room.roomId}</CardTitle>
+                  <CardText
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}>
+                    {room.users.length}/{room.size}
+                    {room.password ? (
+                      <BsFillLockFill size="20px" />
+                    ) : (
+                      <BsFillUnlockFill size="20px" />
+                    )}
+                  </CardText>
                 </CardBody>
               </Card>
             </Col>
