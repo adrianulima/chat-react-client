@@ -18,13 +18,15 @@
 
 .chat-window {
   height: 400px;
-  width: 400px;
+  width: 300px;
   min-width: 0;
   background-color: black;
   border-radius: .25rem;
   color: white;
   margin-bottom: 10px;
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .chat-wrapper {
@@ -52,4 +54,60 @@
 .chat-wrapper.right {
   right: 0;
   align-items: flex-end;
+}
+
+.chat-window-header {
+  width: auto;
+  display: block;
+  height: 60px;
+}
+
+.chat-window > div:last-child >.chat-window-header:last-child{
+  border-radius: 0 0 .25rem .25rem;
+}
+
+.chat-window > div:first-child > .chat-window-header{
+  border-radius: .25rem .25rem 0 0;
+}
+
+.chat-window-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #222222;
+}
+
+.chat-window > .chat-window-body:last-child{
+  border-radius: 0 0 .25rem .25rem;
+}
+
+.chat-window > .chat-window-body:first-child{
+  border-radius: .25rem .25rem 0 0;
+}
+
+.chat-messages-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages-item {
+  padding: 5px 20px;
+  border-bottom: 1px solid black;
+}
+
+.chat-users-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-users-item {
+  padding: 5px 20px;
+  border-bottom: 1px solid black;
+}
+
+.chat-users-item-text {
+  cursor: pointer;
+  font-weight: bold;
 }
