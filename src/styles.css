@@ -111,3 +111,33 @@
   cursor: pointer;
   font-weight: bold;
 }
+
+.chat-badge {
+  height: 22px;
+  width: 22px;
+  border-radius: 11px;
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+}
+
+.chat-badge.top {
+  top: -3px;
+}
+
+.chat-badge.bottom {
+  bottom: -3px;
+}
+
+.chat-badge.left {
+  left: -3px;
+}
+
+.chat-badge.right {
+  right: -3px;
+}

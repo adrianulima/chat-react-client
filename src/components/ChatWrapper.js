@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '../styles.css'
 
-const ChatWrapper = ({ alignX = 'left', alignY = 'top', ...props }) => {
+const ChatWrapper = ({ alignX = 'right', alignY = 'bottom', ...props }) => {
   const className = [styles['chat-wrapper']]
   if (alignX === 'right' || alignX === 'left') className.push(styles[alignX])
   if (alignY === 'top' || alignY === 'bottom') className.push(styles[alignY])
