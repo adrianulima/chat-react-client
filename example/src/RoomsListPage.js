@@ -4,18 +4,15 @@ import {
   Row,
   Col,
   Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Card,
   CardTitle,
   CardBody,
   CardText,
+  CardFooter,
 } from 'reactstrap'
 import { BsFillLockFill, BsFillUnlockFill } from 'react-icons/bs'
-import RoomForm from './components/RoomForm'
-
+import ModalNewRoom from './components/modals/ModalNewRoom'
+import ModalDeleteRoom from './components/modals/ModalDeleteRoom'
 import { map } from 'lodash'
 
 const rooms = [
@@ -30,50 +27,81 @@ const rooms = [
 
 const RoomsListPage = () => {
   const [isNewModalOpen, setIsNewModalOpen] = useState(false)
-  const toggle = () => setIsNewModalOpen(!isNewModalOpen)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const toggleNew = () => setIsNewModalOpen(!isNewModalOpen)
+  const toggleDelete = () => setIsDeleteModalOpen(!isDeleteModalOpen)
+  const toggleEdit = () => setIsEditModalOpen(!isEditModalOpen)
+
   const [currentRoomSize, setCurrentRoomSize] = useState('10')
   const [currentRoomPassword, setCurrentRoomPassword] = useState('')
-  const submitNewRoom = () => {
-    // console.log({
-    //   size: currentRoomSize,
-    //   password: currentRoomPassword !== '' ? currentRoomPassword : undefined,
-    // })
-    setIsNewModalOpen(false)
-    setCurrentRoomSize('10')
-    setCurrentRoomPassword('')
-  }
+  const [currentRoomId, setCurrentRoomId] = useState('')
 
   return (
     <Container>
       <Row className="text-right">
         <Col>
-          <Button color="primary" onClick={toggle}>
+          <Button color="primary" onClick={toggleNew}>
             New room
           </Button>
-          <Modal isOpen={isNewModalOpen} toggle={toggle}>
-            <ModalHeader toggle={toggle}>Create New Room</ModalHeader>
-            <ModalBody>
-              <RoomForm
-                size={currentRoomSize}
-                password={currentRoomPassword}
-                onSizeChange={setCurrentRoomSize}
-                onPasswordChange={setCurrentRoomPassword}
-              />
-            </ModalBody>
-            <ModalFooter>
-              <Button color="primary" onClick={submitNewRoom}>
-                Create
-              </Button>
-            </ModalFooter>
-          </Modal>
+          <ModalNewRoom
+            isOpen={isNewModalOpen}
+            toggle={toggleNew}
+            size={currentRoomSize}
+            password={currentRoomPassword}
+            onSizeChange={setCurrentRoomSize}
+            onPasswordChange={setCurrentRoomPassword}
+            onSubmit={() => {
+              // console.log({
+              //   size: currentRoomSize,
+              //   password: currentRoomPassword !== '' ? currentRoomPassword : undefined,
+              // })
+              setIsNewModalOpen(false)
+              setCurrentRoomSize('10')
+              setCurrentRoomPassword('')
+            }}
+          />
         </Col>
       </Row>
 
+      <>
+        <ModalDeleteRoom
+          isOpen={isDeleteModalOpen}
+          toggle={toggleDelete}
+          roomId={currentRoomId}
+          onSubmit={(roomId) => {
+            // console.log('delete: ', roomId)
+            setIsDeleteModalOpen(false)
+            setCurrentRoomId('')
+          }}
+        />
+        <ModalNewRoom
+          isOpen={isEditModalOpen}
+          toggle={toggleEdit}
+          size={currentRoomSize}
+          password={currentRoomPassword}
+          roomId={currentRoomId}
+          onSizeChange={setCurrentRoomSize}
+          onPasswordChange={setCurrentRoomPassword}
+          onSubmit={() => {
+            // console.log({
+            //   size: currentRoomSize,
+            //   password:
+            //     currentRoomPassword !== '' ? currentRoomPassword : undefined,
+            //   roomId: currentRoomId,
+            // })
+            setIsEditModalOpen(false)
+            setCurrentRoomSize('10')
+            setCurrentRoomPassword('')
+            setCurrentRoomId('')
+          }}
+        />
+      </>
       <Row className="mt-4">
         {map(rooms, (room) => {
           return (
             <Col key={room.roomId} lg="4" md="6" sm="12" className="mb-4">
-              <Card style={{ height: 120 }}>
+              <Card style={{ height: 170 }}>
                 <CardBody>
                   <CardTitle>#{room.roomId}</CardTitle>
                   <CardText
@@ -90,6 +118,32 @@ const RoomsListPage = () => {
                     )}
                   </CardText>
                 </CardBody>
+                <CardFooter className="d-flex justify-content-end">
+                  <Button
+                    outline
+                    color="danger"
+                    onClick={() => {
+                      setCurrentRoomId(room.roomId)
+                      toggleDelete()
+                    }}
+                    size="sm">
+                    Delete
+                  </Button>
+                  <Button
+                    outline
+                    color="secondary"
+                    onClick={() => {
+                      // TODO: get password from API
+                      setCurrentRoomPassword(room.password)
+                      setCurrentRoomSize(room.size)
+                      setCurrentRoomId(room.roomId)
+                      toggleEdit()
+                    }}
+                    size="sm"
+                    className="ml-2">
+                    Edit
+                  </Button>
+                </CardFooter>
               </Card>
             </Col>
           )
