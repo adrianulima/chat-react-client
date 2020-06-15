@@ -10,7 +10,12 @@ import {
   CardText,
   CardFooter,
 } from 'reactstrap'
-import { BsFillLockFill, BsFillUnlockFill } from 'react-icons/bs'
+import {
+  BsFillLockFill,
+  BsFillUnlockFill,
+  BsPencil,
+  BsTrash,
+} from 'react-icons/bs'
 import ModalNewRoom from './components/modals/ModalNewRoom'
 import ModalDeleteRoom from './components/modals/ModalDeleteRoom'
 import { map } from 'lodash'
@@ -104,52 +109,57 @@ const RoomsListPage = () => {
         {map(rooms, (room) => {
           return (
             <Col key={room.roomId} lg="4" md="6" sm="12" className="mb-4">
-              <Card style={{ height: 170 }}>
-                <CardBody>
-                  <CardTitle>#{room.roomId}</CardTitle>
-                  <CardText
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    {room.users.length}/{room.size}
-                    {room.protected ? (
-                      <BsFillLockFill size="20px" />
-                    ) : (
-                      <BsFillUnlockFill size="20px" />
-                    )}
+              <Card className="bg-light">
+                <CardBody className="p-2">
+                  <CardText>
+                    <Row>
+                      <Col>
+                        <h4 className="m-0">#{room.roomId}</h4>
+                      </Col>
+                      <Col className="text-right">
+                        {room.protected ? (
+                          <BsFillLockFill size="16px" />
+                        ) : (
+                          <BsFillUnlockFill color="gray" size="16px" />
+                        )}
+                      </Col>
+                    </Row>
                   </CardText>
                 </CardBody>
-                <CardFooter className="d-flex justify-content-end">
-                  <Button
-                    outline
-                    color="danger"
-                    onClick={() => {
-                      setCurrentRoomId(room.roomId)
-                      toggleDelete()
-                    }}
-                    size="sm"
-                  >
-                    Delete
-                  </Button>
-                  <Button
-                    outline
-                    color="secondary"
-                    onClick={() => {
-                      // TODO: get password from API
-                      setCurrentRoomPassword(room.password)
-                      setCurrentRoomSize(room.size)
-                      setCurrentRoomId(room.roomId)
-                      toggleEdit()
-                    }}
-                    size="sm"
-                    className="ml-2"
-                  >
-                    Edit
-                  </Button>
-                </CardFooter>
+                <Row className="p-1 pl-2">
+                  <Col className="d-flex align-items-center">
+                    Users: {room.users.length}/{room.size}
+                  </Col>
+                  <Col className="text-right">
+                    <Button
+                      outline
+                      color="danger"
+                      onClick={() => {
+                        setCurrentRoomId(room.roomId)
+                        toggleDelete()
+                      }}
+                      size="sm"
+                      className="ml-2 border-0"
+                    >
+                      <BsTrash />
+                    </Button>
+                    <Button
+                      outline
+                      color="primary"
+                      onClick={() => {
+                        // TODO: get password from API
+                        setCurrentRoomPassword(room.password)
+                        setCurrentRoomSize(room.size)
+                        setCurrentRoomId(room.roomId)
+                        toggleEdit()
+                      }}
+                      size="sm"
+                      className="ml-2 border-0"
+                    >
+                      <BsPencil />
+                    </Button>
+                  </Col>
+                </Row>
               </Card>
             </Col>
           )
