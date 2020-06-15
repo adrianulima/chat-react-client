@@ -29,7 +29,8 @@ const Chat = () => {
             }
             setOpen(!open)
           }}
-          disabled={disabled}>
+          disabled={disabled}
+        >
           {!open && <ChatBadge count="99" />}
           {open ? (
             <BsXCircleFill size="20px" />
@@ -45,13 +46,15 @@ const Chat = () => {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-              }}>
+              }}
+            >
               Chat Window
               <Button
                 color="secondary"
                 onClick={() => {
                   setShowMessages(!showMessages)
-                }}>
+                }}
+              >
                 {showMessages ? 'Show Users' : 'Show Messages'}
               </Button>
             </ChatWindowHeader>
