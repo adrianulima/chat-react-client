@@ -7,6 +7,7 @@ import {
   ChatWrapper,
   ChatMessagesContainer,
   ChatUsersContainer,
+  ChatBadge,
 } from 'chat-react-client'
 import { BsChatDotsFill, BsXCircleFill } from 'react-icons/bs'
 import { Button } from 'reactstrap'
@@ -29,6 +30,7 @@ const Chat = () => {
             setOpen(!open)
           }}
           disabled={disabled}>
+          {!open && <ChatBadge count="99" />}
           {open ? (
             <BsXCircleFill size="20px" />
           ) : (
