@@ -14,7 +14,8 @@ const RoomForm = ({ size, onSizeChange, password, onPasswordChange }) => {
           value={size}
           onChange={(e) => {
             onSizeChange && onSizeChange(e.currentTarget.value)
-          }}>
+          }}
+        >
           <option>5</option>
           <option>10</option>
           <option>20</option>

@@ -8,7 +8,8 @@ const ChatMessagesContainer = ({ messages = [], ...props }) => {
         return (
           <div
             key={`${message.userId}_${message.timestamp}`}
-            className={styles['chat-messages-item']}>
+            className={styles['chat-messages-item']}
+          >
             {`${message.timestamp} ${message.userName}: ${message.text}`}
           </div>
         )

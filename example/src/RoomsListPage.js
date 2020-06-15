@@ -109,7 +109,8 @@ const RoomsListPage = () => {
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                    }}>
+                    }}
+                  >
                     {room.users.length}/{room.size}
                     {room.protected ? (
                       <BsFillLockFill size="20px" />
@@ -126,7 +127,8 @@ const RoomsListPage = () => {
                       setCurrentRoomId(room.roomId)
                       toggleDelete()
                     }}
-                    size="sm">
+                    size="sm"
+                  >
                     Delete
                   </Button>
                   <Button
@@ -140,7 +142,8 @@ const RoomsListPage = () => {
                       toggleEdit()
                     }}
                     size="sm"
-                    className="ml-2">
+                    className="ml-2"
+                  >
                     Edit
                   </Button>
                 </CardFooter>
