@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
+import PageContainer from './PageContainer'
 import {
-  Container,
   Row,
   Col,
   Button,
@@ -38,9 +38,12 @@ const RoomsListPage = () => {
   const [currentRoomId, setCurrentRoomId] = useState('')
 
   return (
-    <Container>
-      <Row className="text-right">
+    <PageContainer>
+      <Row className="my-4">
         <Col>
+          <h2>Rooms List</h2>
+        </Col>
+        <Col className="text-right">
           <Button color="primary" onClick={toggleNew}>
             New room
           </Button>
@@ -97,7 +100,7 @@ const RoomsListPage = () => {
           }}
         />
       </>
-      <Row className="mt-4">
+      <Row>
         {map(rooms, (room) => {
           return (
             <Col key={room.roomId} lg="4" md="6" sm="12" className="mb-4">
@@ -152,7 +155,7 @@ const RoomsListPage = () => {
           )
         })}
       </Row>
-    </Container>
+    </PageContainer>
   )
 }
 
