@@ -94,7 +94,31 @@
 
 .chat-messages-item {
   padding: 5px 20px;
+  font-size: 12px;
   border-bottom: 1px solid black;
+  word-wrap: break-word;
+}
+
+.chat-messages-item.mine {
+  color: burlywood;
+}
+
+.chat-messages-item-date {
+  font-size: 8px;
+  margin-right: 4px;
+}
+
+.chat-messages-item-username {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+.chat-messages-item-username.clickable {
+  cursor: pointer;
+}
+
+.chat-messages-item-text.quick {
+  font-style: italic;
 }
 
 .chat-users-container {
