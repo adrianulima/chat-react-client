@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PageContainer from './PageContainer'
-import { Row, Col, Button, Card, CardBody, CardText } from 'reactstrap'
+import { Row, Col, Button, Card, CardBody } from 'reactstrap'
 import {
   BsFillLockFill,
   BsFillUnlockFill,
@@ -102,20 +102,18 @@ const RoomsListPage = () => {
             <Col key={room.roomId} lg="4" md="6" sm="12" className="mb-4">
               <Card className="bg-light">
                 <CardBody className="p-2">
-                  <CardText>
-                    <Row>
-                      <Col>
-                        <h4 className="m-0">#{room.roomId}</h4>
-                      </Col>
-                      <Col className="text-right">
-                        {room.protected ? (
-                          <BsFillLockFill size="16px" />
-                        ) : (
-                          <BsFillUnlockFill color="gray" size="16px" />
-                        )}
-                      </Col>
-                    </Row>
-                  </CardText>
+                  <Row>
+                    <Col>
+                      <h4 className="m-0">#{room.roomId}</h4>
+                    </Col>
+                    <Col className="text-right">
+                      {room.protected ? (
+                        <BsFillLockFill size="16px" />
+                      ) : (
+                        <BsFillUnlockFill color="gray" size="16px" />
+                      )}
+                    </Col>
+                  </Row>
                 </CardBody>
                 <Row className="p-1 pl-2">
                   <Col className="d-flex align-items-center">
