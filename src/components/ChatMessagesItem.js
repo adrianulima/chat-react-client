@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import styles from '../styles.css'
 import { getDateFormat } from '../helpers'
 
@@ -14,9 +14,9 @@ const ChatMessagesItem = ({
 }) => {
   const getClassName = (className, clickable) => {
     const cn = [styles[className]]
-    if (mine) cn.push(styles['mine'])
-    if (quick) cn.push(styles['quick'])
-    if (onClickUser && clickable) cn.push(styles['clickable'])
+    if (mine) cn.push(styles.mine)
+    if (quick) cn.push(styles.quick)
+    if (onClickUser && clickable) cn.push(styles.clickable)
     return cn.join(' ')
   }
 
@@ -24,7 +24,8 @@ const ChatMessagesItem = ({
     <div
       className={getClassName('chat-messages-item')}
       style={{ fontSize: fontSize }}
-      {...props}>
+      {...props}
+    >
       {timestamp && (
         <span className={getClassName('chat-messages-item-date')}>
           {getDateFormat(timestamp)}
@@ -33,7 +34,8 @@ const ChatMessagesItem = ({
       {userName && (
         <span
           className={getClassName('chat-messages-item-username', true)}
-          onClick={onClickUser}>
+          onClick={onClickUser}
+        >
           {userName}:
         </span>
       )}
