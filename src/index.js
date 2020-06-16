@@ -7,3 +7,4 @@ export { default as ChatMessagesContainer } from './components/ChatMessagesConta
 export { default as ChatMessagesItem } from './components/ChatMessagesItem'
 export { default as ChatUsersContainer } from './components/ChatUsersContainer'
 export { default as ChatBadge } from './components/ChatBadge'
+export { default as ChatApiHandler } from './ChatApiHandler'
