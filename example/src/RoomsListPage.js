@@ -1,28 +1,24 @@
 import React, { useState } from 'react'
+import PageContainer from './PageContainer'
+import { Row, Col, Button, Card, CardBody, CardText } from 'reactstrap'
 import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Card,
-  CardTitle,
-  CardBody,
-  CardText,
-  CardFooter,
-} from 'reactstrap'
-import { BsFillLockFill, BsFillUnlockFill } from 'react-icons/bs'
+  BsFillLockFill,
+  BsFillUnlockFill,
+  BsPencil,
+  BsTrash,
+} from 'react-icons/bs'
 import ModalNewRoom from './components/modals/ModalNewRoom'
 import ModalDeleteRoom from './components/modals/ModalDeleteRoom'
 import { map } from 'lodash'
 
 const rooms = [
-  { roomId: 1234, size: 6, users: ['1', '2'], protected: true },
-  { roomId: 2345, size: 3, users: ['3'], protected: true },
-  { roomId: 3456, size: 4, users: ['4'] },
-  { roomId: 4567, size: 6, users: [] },
-  { roomId: 5678, size: 6, users: [] },
-  { roomId: 6789, size: 6, users: [] },
-  { roomId: 7890, size: 6, users: [] },
+  { roomId: '1234', size: 16, usersCount: 6, protected: true },
+  { roomId: '2345', size: 4, usersCount: 2, protected: true },
+  { roomId: '3456', size: 4, usersCount: 0 },
+  { roomId: '4567', size: 8, usersCount: 2 },
+  { roomId: '5678', size: 12, usersCount: 6 },
+  { roomId: '6789', size: 4, usersCount: 0, protected: true },
+  { roomId: '7890', size: 16, usersCount: 10 },
 ]
 
 const RoomsListPage = () => {
@@ -38,9 +34,12 @@ const RoomsListPage = () => {
   const [currentRoomId, setCurrentRoomId] = useState('')
 
   return (
-    <Container>
-      <Row className="text-right">
+    <PageContainer>
+      <Row className="my-4">
         <Col>
+          <h2>Rooms List</h2>
+        </Col>
+        <Col className="text-right">
           <Button color="primary" onClick={toggleNew}>
             New room
           </Button>
@@ -97,62 +96,67 @@ const RoomsListPage = () => {
           }}
         />
       </>
-      <Row className="mt-4">
+      <Row>
         {map(rooms, (room) => {
           return (
             <Col key={room.roomId} lg="4" md="6" sm="12" className="mb-4">
-              <Card style={{ height: 170 }}>
-                <CardBody>
-                  <CardTitle>#{room.roomId}</CardTitle>
-                  <CardText
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    {room.users.length}/{room.size}
-                    {room.protected ? (
-                      <BsFillLockFill size="20px" />
-                    ) : (
-                      <BsFillUnlockFill size="20px" />
-                    )}
+              <Card className="bg-light">
+                <CardBody className="p-2">
+                  <CardText>
+                    <Row>
+                      <Col>
+                        <h4 className="m-0">#{room.roomId}</h4>
+                      </Col>
+                      <Col className="text-right">
+                        {room.protected ? (
+                          <BsFillLockFill size="16px" />
+                        ) : (
+                          <BsFillUnlockFill color="gray" size="16px" />
+                        )}
+                      </Col>
+                    </Row>
                   </CardText>
                 </CardBody>
-                <CardFooter className="d-flex justify-content-end">
-                  <Button
-                    outline
-                    color="danger"
-                    onClick={() => {
-                      setCurrentRoomId(room.roomId)
-                      toggleDelete()
-                    }}
-                    size="sm"
-                  >
-                    Delete
-                  </Button>
-                  <Button
-                    outline
-                    color="secondary"
-                    onClick={() => {
-                      // TODO: get password from API
-                      setCurrentRoomPassword(room.password)
-                      setCurrentRoomSize(room.size)
-                      setCurrentRoomId(room.roomId)
-                      toggleEdit()
-                    }}
-                    size="sm"
-                    className="ml-2"
-                  >
-                    Edit
-                  </Button>
-                </CardFooter>
+                <Row className="p-1 pl-2">
+                  <Col className="d-flex align-items-center">
+                    Users: {room.usersCount}/{room.size}
+                  </Col>
+                  <Col className="text-right">
+                    <Button
+                      outline
+                      color="danger"
+                      onClick={() => {
+                        setCurrentRoomId(room.roomId)
+                        toggleDelete()
+                      }}
+                      size="sm"
+                      className="ml-2 border-0"
+                    >
+                      <BsTrash />
+                    </Button>
+                    <Button
+                      outline
+                      color="primary"
+                      onClick={() => {
+                        // TODO: get password from API
+                        setCurrentRoomPassword(room.password)
+                        setCurrentRoomSize(room.size)
+                        setCurrentRoomId(room.roomId)
+                        toggleEdit()
+                      }}
+                      size="sm"
+                      className="ml-2 border-0"
+                    >
+                      <BsPencil />
+                    </Button>
+                  </Col>
+                </Row>
               </Card>
             </Col>
           )
         })}
       </Row>
-    </Container>
+    </PageContainer>
   )
 }
 
