@@ -14,10 +14,14 @@ const RoomForm = ({ size, onSizeChange, password, onPasswordChange }) => {
           value={size}
           onChange={(e) => {
             onSizeChange && onSizeChange(e.currentTarget.value)
-          }}>
-          <option>5</option>
-          <option>10</option>
+          }}
+        >
+          <option>4</option>
+          <option>8</option>
+          <option>12</option>
+          <option>16</option>
           <option>20</option>
+          <option>24</option>
         </Input>
       </FormGroup>
       <FormGroup check>

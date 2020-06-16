@@ -13,7 +13,8 @@ const ChatUsersContainer = ({
           <div key={user.userId} className={styles['chat-users-item']}>
             <span
               className={styles['chat-users-item-text']}
-              onClick={() => onClickUser(user)}>
+              onClick={() => onClickUser(user)}
+            >
               {user.name}
             </span>
           </div>
