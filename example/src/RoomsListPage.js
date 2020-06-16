@@ -12,13 +12,13 @@ import ModalDeleteRoom from './components/modals/ModalDeleteRoom'
 import { map } from 'lodash'
 
 const rooms = [
-  { roomId: 1234, size: 16, usersCount: 6, protected: true },
-  { roomId: 2345, size: 4, usersCount: 2, protected: true },
-  { roomId: 3456, size: 4, usersCount: 0 },
-  { roomId: 4567, size: 8, usersCount: 2 },
-  { roomId: 5678, size: 12, usersCount: 6 },
-  { roomId: 6789, size: 4, usersCount: 0, protected: true },
-  { roomId: 7890, size: 16, usersCount: 10 },
+  { roomId: '1234', size: 16, usersCount: 6, protected: true },
+  { roomId: '2345', size: 4, usersCount: 2, protected: true },
+  { roomId: '3456', size: 4, usersCount: 0 },
+  { roomId: '4567', size: 8, usersCount: 2 },
+  { roomId: '5678', size: 12, usersCount: 6 },
+  { roomId: '6789', size: 4, usersCount: 0, protected: true },
+  { roomId: '7890', size: 16, usersCount: 10 },
 ]
 
 const RoomsListPage = () => {
