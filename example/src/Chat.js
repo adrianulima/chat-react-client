@@ -13,7 +13,6 @@ import {
   ChatAddonContainerItem,
   ChatAddonButton,
   ChatStickersItem,
-  ChatEmoticonsItem,
   ChatQuickMessagesItem,
 } from 'chat-react-client'
 import { BsChatDotsFill, BsXCircleFill } from 'react-icons/bs'
@@ -81,31 +80,6 @@ const Chat = () => {
       user: { userId: 4, userName: 'Quadrano' },
       quick: true,
     },
-  ]
-  const emoticons = [
-    '😃',
-    '😆',
-    '😅',
-    '😘',
-    '🤪',
-    '😔',
-    '😎',
-    '🥳',
-    '😖',
-    '🥺',
-    '😌',
-    '😍',
-    '😆',
-    '😅',
-    '😘',
-    '🤪',
-    '😔',
-    '😎',
-    '🥳',
-    '😖',
-    '🥺',
-    '😌',
-    '😍',
   ]
   const stickers = ['😃', '😆', '😅', '😘', '😅', '😘']
   const quickmessages = [
@@ -224,7 +198,7 @@ const Chat = () => {
                       {showEmoticons && (
                         <>
                           {stickers.length > 0 && (
-                            <ChatAddonContainerItem>
+                            <ChatAddonContainerItem grid>
                               {map(stickers, (sticker, key) => {
                                 return (
                                   <ChatStickersItem
@@ -236,23 +210,6 @@ const Chat = () => {
                                   >
                                     {sticker}
                                   </ChatStickersItem>
-                                )
-                              })}
-                            </ChatAddonContainerItem>
-                          )}
-                          {emoticons.length > 0 && (
-                            <ChatAddonContainerItem>
-                              {map(emoticons, (emoticon, key) => {
-                                return (
-                                  <ChatEmoticonsItem
-                                    key={key}
-                                    onClick={() => {
-                                      // console.log(emoticon)
-                                      setMessage(`${message}${emoticon}`)
-                                    }}
-                                  >
-                                    {emoticon}
-                                  </ChatEmoticonsItem>
                                 )
                               })}
                             </ChatAddonContainerItem>
@@ -273,19 +230,6 @@ const Chat = () => {
                               >
                                 {quickmessage}
                               </ChatQuickMessagesItem>
-                            )
-                          })}
-                          {map(stickers, (sticker, key) => {
-                            return (
-                              <ChatStickersItem
-                                key={key}
-                                onClick={() => {
-                                  // console.log(sticker)
-                                  setShowEmoticons(false)
-                                }}
-                              >
-                                {sticker}
-                              </ChatStickersItem>
                             )
                           })}
                         </ChatAddonContainerItem>
