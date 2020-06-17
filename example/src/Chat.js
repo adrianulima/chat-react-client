@@ -9,8 +9,15 @@ import {
   ChatMessagesItem,
   ChatUsersContainer,
   ChatBadge,
+  ChatAddonContainer,
+  ChatAddonContainerItem,
+  ChatAddonButton,
+  ChatStickersItem,
+  ChatEmoticonsItem,
+  ChatQuickMessagesItem,
 } from 'chat-react-client'
 import { BsChatDotsFill, BsXCircleFill } from 'react-icons/bs'
+import { FiSmile, FiXCircle, FiMessageCircle } from 'react-icons/fi'
 import { Button } from 'reactstrap'
 import { map, find } from 'lodash'
 
@@ -18,6 +25,9 @@ const Chat = () => {
   const [open, setOpen] = useState(false)
   const [disabled, setDisabled] = useState(false)
   const [showMessages, setShowMessages] = useState(true)
+  const [showEmoticons, setShowEmoticons] = useState(false)
+  const [showQuickMessages, setShowQuickMessages] = useState(false)
+  const [message, setMessage] = useState('')
 
   const users = [{ userId: 1, name: 'Ciclano' }]
   const messages = [
@@ -71,6 +81,46 @@ const Chat = () => {
       user: { userId: 4, userName: 'Quadrano' },
       quick: true,
     },
+  ]
+  const emoticons = [
+    '😃',
+    '😆',
+    '😅',
+    '😘',
+    '🤪',
+    '😔',
+    '😎',
+    '🥳',
+    '😖',
+    '🥺',
+    '😌',
+    '😍',
+    '😆',
+    '😅',
+    '😘',
+    '🤪',
+    '😔',
+    '😎',
+    '🥳',
+    '😖',
+    '🥺',
+    '😌',
+    '😍',
+  ]
+  const stickers = ['😃', '😆', '😅', '😘', '😅', '😘']
+  const quickmessages = [
+    'Hi',
+    'Hello!',
+    'Good Afternoon',
+    'Good Morning',
+    'Good Evening',
+    'Good Night',
+    'Bye',
+    'Bye Bye',
+    'Good Luck',
+    'Well done!',
+    'Ok',
+    'Yaww!',
   ]
 
   const getUserClickCallback = (userId) => {
@@ -149,6 +199,126 @@ const Chat = () => {
                 />
               )}
             </ChatWindowBody>
+            {showMessages && (
+              <ChatWindowHeader>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    position: 'relative',
+                  }}
+                >
+                  <textarea
+                    style={{
+                      flex: '1 1 auto',
+                      width: '1%',
+                      height: '60px',
+                      resize: 'none',
+                    }}
+                    placeholder="Digite uma mensagem..."
+                    onChange={(e) => setMessage(e.currentTarget.value)}
+                    value={message}
+                  />
+                  {(showEmoticons || showQuickMessages) && (
+                    <ChatAddonContainer>
+                      {showEmoticons && (
+                        <>
+                          {stickers.length > 0 && (
+                            <ChatAddonContainerItem>
+                              {map(stickers, (sticker, key) => {
+                                return (
+                                  <ChatStickersItem
+                                    key={key}
+                                    onClick={() => {
+                                      // console.log(sticker)
+                                      setShowEmoticons(false)
+                                    }}
+                                  >
+                                    {sticker}
+                                  </ChatStickersItem>
+                                )
+                              })}
+                            </ChatAddonContainerItem>
+                          )}
+                          {emoticons.length > 0 && (
+                            <ChatAddonContainerItem>
+                              {map(emoticons, (emoticon, key) => {
+                                return (
+                                  <ChatEmoticonsItem
+                                    key={key}
+                                    onClick={() => {
+                                      // console.log(emoticon)
+                                      setMessage(`${message}${emoticon}`)
+                                    }}
+                                  >
+                                    {emoticon}
+                                  </ChatEmoticonsItem>
+                                )
+                              })}
+                            </ChatAddonContainerItem>
+                          )}
+                        </>
+                      )}
+
+                      {showQuickMessages && (
+                        <ChatAddonContainerItem>
+                          {map(quickmessages, (quickmessage, key) => {
+                            return (
+                              <ChatQuickMessagesItem
+                                key={key}
+                                onClick={() => {
+                                  // console.log(emoticon)
+                                  setShowQuickMessages(false)
+                                }}
+                              >
+                                {quickmessage}
+                              </ChatQuickMessagesItem>
+                            )
+                          })}
+                          {map(stickers, (sticker, key) => {
+                            return (
+                              <ChatStickersItem
+                                key={key}
+                                onClick={() => {
+                                  // console.log(sticker)
+                                  setShowEmoticons(false)
+                                }}
+                              >
+                                {sticker}
+                              </ChatStickersItem>
+                            )
+                          })}
+                        </ChatAddonContainerItem>
+                      )}
+                    </ChatAddonContainer>
+                  )}
+                  <ChatAddonButton
+                    onClick={() => {
+                      setShowEmoticons(!showEmoticons)
+                      setShowQuickMessages(false)
+                    }}
+                  >
+                    {showEmoticons ? (
+                      <FiXCircle size="20px" />
+                    ) : (
+                      <FiSmile size="20px" />
+                    )}
+                  </ChatAddonButton>
+                  <ChatAddonButton
+                    onClick={() => {
+                      setShowQuickMessages(!showQuickMessages)
+                      setShowEmoticons(false)
+                    }}
+                  >
+                    {showQuickMessages ? (
+                      <FiXCircle size="20px" />
+                    ) : (
+                      <FiMessageCircle size="20px" />
+                    )}
+                  </ChatAddonButton>
+                </div>
+              </ChatWindowHeader>
+            )}
           </ChatWindow>
         )}
       </ChatWrapper>

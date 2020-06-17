@@ -40,7 +40,6 @@
   flex-direction: column;
 }
 
-
 .chat-wrapper.bottom {
   bottom: 0;
   flex-direction: column-reverse;
@@ -60,6 +59,55 @@
   width: auto;
   display: block;
   height: 60px;
+}
+
+.chat-addon-container {
+  width: 100%;
+  max-height: 120px;
+  bottom: 100%;
+  background-color: #444444;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.chat-addon-container-item {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto;
+}
+.chat-addon-button {
+  height: 20px;
+  width: 20px;
+  margin: 5px;
+  border-radius: 10px;
+  background-color: #444444;
+  display: flex;
+  cursor: pointer;
+}
+
+.chat-emoticons-item {
+  width: 10%;
+  padding: 2px;
+  text-align: center;
+}
+
+.chat-stickers-item {
+  padding: 2px;
+  width: 25%;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-right: 1px solid #666666;
+  border-bottom: 1px solid #666666;
+}
+
+.chat-quick-messages-item {
+  padding: 2px;
+  width: 100%;
+  border-bottom: 1px solid #666666;
 }
 
 .chat-window > div:last-child >.chat-window-header:last-child{
