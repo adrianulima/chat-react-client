@@ -13,9 +13,9 @@ const ChatApiHandler = ({ baseUrl } = {}) => {
   return {
     axios: axiosApi,
 
-    postRoom: (config) => {
+    postRoom: (data, config) => {
       return axiosApi
-        .post('/rooms', config)
+        .post('/rooms', data, config)
         .then(getResponseData)
         .catch(apiErrorHandler)
     },
@@ -34,9 +34,9 @@ const ChatApiHandler = ({ baseUrl } = {}) => {
         .catch(apiErrorHandler)
     },
 
-    updateRoom: (roomId, config) => {
+    updateRoom: (roomId, data, config) => {
       return axiosApi
-        .update(`/rooms/${roomId}`, config)
+        .put(`/rooms/${roomId}`, data, config)
         .then(getResponseData)
         .catch(apiErrorHandler)
     },
@@ -48,9 +48,9 @@ const ChatApiHandler = ({ baseUrl } = {}) => {
         .catch(apiErrorHandler)
     },
 
-    postRoomMessage: (roomId, config) => {
+    postRoomMessage: (roomId, data, config) => {
       return axiosApi
-        .post(`/rooms${roomId}/messages`, config)
+        .post(`/rooms${roomId}/messages`, data, config)
         .then(getResponseData)
         .catch(apiErrorHandler)
     },
@@ -62,9 +62,9 @@ const ChatApiHandler = ({ baseUrl } = {}) => {
         .catch(apiErrorHandler)
     },
 
-    postRoomUser: (roomId, config) => {
+    postRoomUser: (roomId, data, config) => {
       return axiosApi
-        .post(`/rooms${roomId}/users`, config)
+        .post(`/rooms${roomId}/users`, data, config)
         .then(getResponseData)
         .catch(apiErrorHandler)
     },
@@ -76,9 +76,9 @@ const ChatApiHandler = ({ baseUrl } = {}) => {
         .catch(apiErrorHandler)
     },
 
-    updateRoomUser: (roomId, userId, config) => {
+    updateRoomUser: (roomId, userId, data, config) => {
       return axiosApi
-        .put(`/rooms${roomId}/users/${userId}`, config)
+        .put(`/rooms${roomId}/users/${userId}`, data, config)
         .then(getResponseData)
         .catch(apiErrorHandler)
     },

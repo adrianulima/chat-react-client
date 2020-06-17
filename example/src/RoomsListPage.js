@@ -10,6 +10,7 @@ import {
 import ModalNewRoom from './components/modals/ModalNewRoom'
 import ModalDeleteRoom from './components/modals/ModalDeleteRoom'
 import { map } from 'lodash'
+import { ChatApiHandler } from 'chat-react-client'
 
 const rooms = [
   { roomId: '1234', size: 16, usersCount: 6, protected: true },
@@ -20,6 +21,8 @@ const rooms = [
   { roomId: '6789', size: 4, usersCount: 0, protected: true },
   { roomId: '7890', size: 16, usersCount: 10 },
 ]
+
+const chatApi = ChatApiHandler()
 
 const RoomsListPage = () => {
   const [isNewModalOpen, setIsNewModalOpen] = useState(false)
@@ -32,6 +35,18 @@ const RoomsListPage = () => {
   const [currentRoomSize, setCurrentRoomSize] = useState('10')
   const [currentRoomPassword, setCurrentRoomPassword] = useState('')
   const [currentRoomId, setCurrentRoomId] = useState('')
+
+  const updateRooms = () =>
+    chatApi.getRooms().then((rooms) => {
+      //TODO setRoomList(rooms)
+    })
+
+  const deleteRoom = () => {
+    chatApi.deleteRoom(currentRoomId).then(() => updateRooms())
+
+    setIsDeleteModalOpen(false)
+    setCurrentRoomId('')
+  }
 
   return (
     <PageContainer>
@@ -68,11 +83,7 @@ const RoomsListPage = () => {
           isOpen={isDeleteModalOpen}
           toggle={toggleDelete}
           roomId={currentRoomId}
-          onSubmit={(roomId) => {
-            // console.log('delete: ', roomId)
-            setIsDeleteModalOpen(false)
-            setCurrentRoomId('')
-          }}
+          onSubmit={deleteRoom}
         />
         <ModalNewRoom
           isOpen={isEditModalOpen}
