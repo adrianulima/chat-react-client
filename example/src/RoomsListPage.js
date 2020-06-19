@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PageContainer from './PageContainer'
 import { Row, Col, Button, Card, CardBody } from 'reactstrap'
 import {
@@ -12,22 +12,13 @@ import ModalDeleteRoom from './components/modals/ModalDeleteRoom'
 import { map } from 'lodash'
 import { ChatApiHandler } from 'chat-react-client'
 
-const rooms = [
-  { roomId: '1234', size: 16, usersCount: 6, protected: true },
-  { roomId: '2345', size: 4, usersCount: 2, protected: true },
-  { roomId: '3456', size: 4, usersCount: 0 },
-  { roomId: '4567', size: 8, usersCount: 2 },
-  { roomId: '5678', size: 12, usersCount: 6 },
-  { roomId: '6789', size: 4, usersCount: 0, protected: true },
-  { roomId: '7890', size: 16, usersCount: 10 },
-]
-
 const chatApi = ChatApiHandler()
 
 const RoomsListPage = () => {
   const [isNewModalOpen, setIsNewModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+
   const toggleNew = () => setIsNewModalOpen(!isNewModalOpen)
   const toggleDelete = () => setIsDeleteModalOpen(!isDeleteModalOpen)
   const toggleEdit = () => setIsEditModalOpen(!isEditModalOpen)
@@ -35,6 +26,12 @@ const RoomsListPage = () => {
   const [currentRoomSize, setCurrentRoomSize] = useState('4')
   const [currentRoomPassword, setCurrentRoomPassword] = useState('')
   const [currentRoomId, setCurrentRoomId] = useState('')
+
+  const [roomsList, setRoomsList] = useState([])
+
+  useEffect(() => {
+    updateRooms()
+  }, [])
 
   const createRoom = () => {
     const newRoom = { size: currentRoomSize }
@@ -48,8 +45,7 @@ const RoomsListPage = () => {
 
   const updateRooms = () =>
     chatApi.getRooms().then((rooms) => {
-      // TODO setRoomList(rooms)
-      console.log(rooms)
+      setRoomsList(rooms.list)
     })
 
   const deleteRoom = () => {
@@ -111,7 +107,7 @@ const RoomsListPage = () => {
         />
       </>
       <Row>
-        {map(rooms, (room) => {
+        {map(roomsList, (room) => {
           return (
             <Col key={room.roomId} lg="4" md="6" sm="12" className="mb-4">
               <Card className="bg-light">
