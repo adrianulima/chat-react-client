@@ -32,13 +32,24 @@ const RoomsListPage = () => {
   const toggleDelete = () => setIsDeleteModalOpen(!isDeleteModalOpen)
   const toggleEdit = () => setIsEditModalOpen(!isEditModalOpen)
 
-  const [currentRoomSize, setCurrentRoomSize] = useState('10')
+  const [currentRoomSize, setCurrentRoomSize] = useState('4')
   const [currentRoomPassword, setCurrentRoomPassword] = useState('')
   const [currentRoomId, setCurrentRoomId] = useState('')
 
+  const createRoom = () => {
+    const newRoom = { size: currentRoomSize }
+    if (currentRoomPassword) newRoom.password = currentRoomPassword
+    chatApi.postRoom(newRoom).then(() => updateRooms())
+
+    setIsNewModalOpen(false)
+    setCurrentRoomSize('4')
+    setCurrentRoomPassword('')
+  }
+
   const updateRooms = () =>
     chatApi.getRooms().then((rooms) => {
-      //TODO setRoomList(rooms)
+      // TODO setRoomList(rooms)
+      console.log(rooms)
     })
 
   const deleteRoom = () => {
@@ -65,15 +76,7 @@ const RoomsListPage = () => {
             password={currentRoomPassword}
             onSizeChange={setCurrentRoomSize}
             onPasswordChange={setCurrentRoomPassword}
-            onSubmit={() => {
-              // console.log({
-              //   size: currentRoomSize,
-              //   password: currentRoomPassword !== '' ? currentRoomPassword : undefined,
-              // })
-              setIsNewModalOpen(false)
-              setCurrentRoomSize('10')
-              setCurrentRoomPassword('')
-            }}
+            onSubmit={createRoom}
           />
         </Col>
       </Row>
@@ -101,7 +104,7 @@ const RoomsListPage = () => {
             //   roomId: currentRoomId,
             // })
             setIsEditModalOpen(false)
-            setCurrentRoomSize('10')
+            setCurrentRoomSize('4')
             setCurrentRoomPassword('')
             setCurrentRoomId('')
           }}

@@ -50,35 +50,35 @@ const ChatApiHandler = ({ baseUrl } = {}) => {
 
     postRoomMessage: (roomId, data, config) => {
       return axiosApi
-        .post(`/rooms${roomId}/messages`, data, config)
+        .post(`/rooms/${roomId}/messages`, data, config)
         .then(getResponseData)
         .catch(apiErrorHandler)
     },
 
     getRoomMessages: (roomId, config) => {
       return axiosApi
-        .get(`/rooms${roomId}/messages`, config)
+        .get(`/rooms/${roomId}/messages`, config)
         .then(getResponseData)
         .catch(apiErrorHandler)
     },
 
     postRoomUser: (roomId, data, config) => {
       return axiosApi
-        .post(`/rooms${roomId}/users`, data, config)
+        .post(`/rooms/${roomId}/users`, data, config)
         .then(getResponseData)
         .catch(apiErrorHandler)
     },
 
     getRoomUsers: (roomId, config) => {
       return axiosApi
-        .get(`/rooms${roomId}/users`, config)
+        .get(`/rooms/${roomId}/users`, config)
         .then(getResponseData)
         .catch(apiErrorHandler)
     },
 
     updateRoomUser: (roomId, userId, data, config) => {
       return axiosApi
-        .put(`/rooms${roomId}/users/${userId}`, data, config)
+        .put(`/rooms/${roomId}/users/${userId}`, data, config)
         .then(getResponseData)
         .catch(apiErrorHandler)
     },
