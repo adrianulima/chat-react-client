@@ -1,14 +1,8 @@
 import React from 'react'
 import RoomsListPage from './RoomsListPage'
-import Chat from './Chat'
 
 const App = () => {
-  return (
-    <>
-      <RoomsListPage />
-      <Chat />
-    </>
-  )
+  return <RoomsListPage />
 }
 
 export default App
