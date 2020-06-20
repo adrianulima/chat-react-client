@@ -16,17 +16,11 @@ const RoomCard = ({
   onClickDelete,
   onClickEdit,
 }) => (
-  <Card className="bg-light">
-    <CardBody className="p-2">
+  <Card className="bg-light room-id">
+    <CardBody className="px-2 pt-1 pb-0">
       <Row>
         <Col>
-          <h4
-            className="m-0"
-            style={{ cursor: 'pointer' }}
-            onClick={onClickRoomId}
-          >
-            #{roomId}
-          </h4>
+          <span onClick={onClickRoomId}>{roomId}</span>
         </Col>
         <Col className="text-right">
           {isProtected ? (

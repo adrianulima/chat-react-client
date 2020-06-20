@@ -93,7 +93,7 @@
 }
 
 .chat-messages-item {
-  padding: 5px 20px;
+  padding: 8px 12px;
   font-size: 12px;
   border-bottom: 1px solid black;
   word-wrap: break-word;
@@ -127,7 +127,7 @@
 }
 
 .chat-users-item {
-  padding: 5px 20px;
+  padding: 8px 12px;
   border-bottom: 1px solid black;
 }
 

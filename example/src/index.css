@@ -12,3 +12,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+div.card.room-id {
+  pointer-events: none;
+  transition: border-color 300ms;
+}
+div.card.room-id:hover {
+  border-color: var(--primary);
+}
+div.card.room-id .btn {
+  pointer-events: auto;
+}
+div.card.room-id span {
+  pointer-events: auto;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+div.card.room-id span:before {
+  content: '# ';
+  font-size: 18px;
+  font-weight: normal;
+  color: var(--gray);
+}
+div.card.room-id span:hover {
+  color: var(--primary);
+}

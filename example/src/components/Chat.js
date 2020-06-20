@@ -10,8 +10,8 @@ import {
   ChatUsersContainer,
   ChatBadge,
 } from 'chat-react-client'
-import { BsChatDotsFill, BsXCircleFill } from 'react-icons/bs'
-import { Button } from 'reactstrap'
+import { BsChatDotsFill, BsXCircleFill, BsFillPeopleFill } from 'react-icons/bs'
+import { Button, ButtonGroup } from 'reactstrap'
 import { map, find } from 'lodash'
 
 const Chat = ({ roomId }) => {
@@ -98,12 +98,20 @@ const Chat = ({ roomId }) => {
             }}
           >
             Room: #{roomId}
-            <Button
-              color="secondary"
-              onClick={() => setShowMessages(!showMessages)}
-            >
-              {showMessages ? 'Show Users' : 'Show Messages'}
-            </Button>
+            <ButtonGroup size="sm">
+              <Button
+                disabled={showMessages}
+                onClick={() => setShowMessages(true)}
+              >
+                <BsChatDotsFill />
+              </Button>
+              <Button
+                disabled={!showMessages}
+                onClick={() => setShowMessages(false)}
+              >
+                <BsFillPeopleFill />
+              </Button>
+            </ButtonGroup>
           </ChatWindowHeader>
           <ChatWindowBody>
             {showMessages ? (
