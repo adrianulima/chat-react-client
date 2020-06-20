@@ -14,9 +14,8 @@ import { BsChatDotsFill, BsXCircleFill } from 'react-icons/bs'
 import { Button } from 'reactstrap'
 import { map, find } from 'lodash'
 
-const Chat = () => {
+const Chat = ({ roomId }) => {
   const [open, setOpen] = useState(false)
-  const [disabled, setDisabled] = useState(false)
   const [showMessages, setShowMessages] = useState(true)
 
   const users = [{ userId: 1, name: 'Ciclano' }]
@@ -86,15 +85,9 @@ const Chat = () => {
     <div>
       <ChatWrapper>
         <ChatButton
-          onClick={(e) => {
-            if (e.shiftKey) {
-              setDisabled(!disabled)
-              setOpen(false)
-              return
-            }
+          onClick={() => {
             setOpen(!open)
           }}
-          disabled={disabled}
         >
           {!open && <ChatBadge count="99" />}
           {open ? (
@@ -113,7 +106,7 @@ const Chat = () => {
                 alignItems: 'center',
               }}
             >
-              Chat Window
+              Room: #{roomId}
               <Button
                 color="secondary"
                 onClick={() => {
