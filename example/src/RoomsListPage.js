@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PageContainer from './PageContainer'
 import { Row, Col, Button, Card, CardBody } from 'reactstrap'
 import {
@@ -14,16 +14,6 @@ import { ChatApiHandler, apiErrorHandler } from 'chat-react-client'
 import ModalEnterRoom from './components/modals/ModalEnterRoom'
 import Chat from './Chat'
 
-const rooms = [
-  { roomId: '1234', size: 16, usersCount: 6, protected: true },
-  { roomId: '2345', size: 4, usersCount: 2, protected: true },
-  { roomId: '3456', size: 4, usersCount: 0 },
-  { roomId: '4567', size: 8, usersCount: 2 },
-  { roomId: '5678', size: 12, usersCount: 6 },
-  { roomId: '6789', size: 4, usersCount: 0, protected: true },
-  { roomId: '7890', size: 16, usersCount: 10 },
-]
-
 const chatApi = ChatApiHandler()
 
 const RoomsListPage = () => {
@@ -31,6 +21,7 @@ const RoomsListPage = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isEnterModalOpen, setIsEnterModalOpen] = useState(false)
+
   const toggleNew = () => setIsNewModalOpen(!isNewModalOpen)
   const toggleDelete = () => setIsDeleteModalOpen(!isDeleteModalOpen)
   const toggleEdit = () => setIsEditModalOpen(!isEditModalOpen)
@@ -42,6 +33,12 @@ const RoomsListPage = () => {
   const [currentRoomId, setCurrentRoomId] = useState('')
   const [currentUserName, setCurrentUserName] = useState('')
   const [currentRoomChat, setCurrentRoomChat] = useState('')
+
+  const [roomsList, setRoomsList] = useState([])
+
+  useEffect(() => {
+    updateRooms()
+  }, [])
 
   const createRoom = () => {
     const newRoom = { size: currentRoomSize }
@@ -60,8 +57,7 @@ const RoomsListPage = () => {
     chatApi
       .getRooms()
       .then((rooms) => {
-        // TODO setRoomList(rooms)
-        console.log(rooms)
+        setRoomsList(rooms.list)
       })
       .catch(apiErrorHandler)
 
@@ -158,81 +154,79 @@ const RoomsListPage = () => {
           />
         </>
         <Row>
-          {map(rooms, (room) => {
-            return (
-              <Col key={room.roomId} lg="4" md="6" sm="12" className="mb-4">
-                <Card className="bg-light">
-                  <CardBody className="p-2">
-                    <Row>
-                      <Col>
-                        <h4
-                          className="m-0"
-                          style={{ cursor: 'pointer' }}
-                          onClick={() => {
-                            setCurrentRoomId(room.roomId)
-                            setCurrentRoomProtected(room.protected)
-                            const roomInfo = localStorage.getItem(room.roomId)
-                            if (roomInfo) {
-                              const roomObject = JSON.parse(roomInfo)
-                              setCurrentRoomPassword(roomObject.password)
-                              setCurrentUserName(roomObject.user.userName)
-                            } else {
-                              setCurrentUserName('')
-                              setCurrentRoomPassword('')
-                            }
-                            toggleEnter()
-                          }}
-                        >
-                          #{room.roomId}
-                        </h4>
-                      </Col>
-                      <Col className="text-right">
-                        {room.protected ? (
-                          <BsFillLockFill size="16px" />
-                        ) : (
-                          <BsFillUnlockFill color="gray" size="16px" />
-                        )}
-                      </Col>
-                    </Row>
-                  </CardBody>
-                  <Row className="p-1 pl-2">
-                    <Col className="d-flex align-items-center">
-                      Users: {room.usersCount}/{room.size}
+          {map(roomsList, (room) => (
+            <Col key={room.roomId} lg="4" md="6" sm="12" className="mb-4">
+              <Card className="bg-light">
+                <CardBody className="p-2">
+                  <Row>
+                    <Col>
+                      <h4
+                        className="m-0"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => {
+                          setCurrentRoomId(room.roomId)
+                          setCurrentRoomProtected(room.protected)
+                          const roomInfo = localStorage.getItem(room.roomId)
+                          if (roomInfo) {
+                            const roomObject = JSON.parse(roomInfo)
+                            setCurrentRoomPassword(roomObject.password)
+                            setCurrentUserName(roomObject.user.userName)
+                          } else {
+                            setCurrentUserName('')
+                            setCurrentRoomPassword('')
+                          }
+                          toggleEnter()
+                        }}
+                      >
+                        #{room.roomId}
+                      </h4>
                     </Col>
                     <Col className="text-right">
-                      <Button
-                        outline
-                        color="danger"
-                        onClick={() => {
-                          setCurrentRoomId(room.roomId)
-                          toggleDelete()
-                        }}
-                        size="sm"
-                        className="ml-2 border-0"
-                      >
-                        <BsTrash />
-                      </Button>
-                      <Button
-                        outline
-                        color="primary"
-                        onClick={() => {
-                          // TODO: get password from API
-                          setCurrentRoomPassword(room.password)
-                          setCurrentRoomSize(room.size)
-                          setCurrentRoomId(room.roomId)
-                          toggleEdit()
-                        }}
-                        size="sm"
-                        className="ml-2 border-0"
-                      >
-                        <BsPencil />
-                      </Button>
+                      {room.protected ? (
+                        <BsFillLockFill size="16px" />
+                      ) : (
+                        <BsFillUnlockFill color="gray" size="16px" />
+                      )}
                     </Col>
                   </Row>
-                </Card>
-              </Col>
-            )
-          })}
+                </CardBody>
+                <Row className="p-1 pl-2">
+                  <Col className="d-flex align-items-center">
+                    Users: {room.usersCount}/{room.size}
+                  </Col>
+                  <Col className="text-right">
+                    <Button
+                      outline
+                      color="danger"
+                      onClick={() => {
+                        setCurrentRoomId(room.roomId)
+                        toggleDelete()
+                      }}
+                      size="sm"
+                      className="ml-2 border-0"
+                    >
+                      <BsTrash />
+                    </Button>
+                    <Button
+                      outline
+                      color="primary"
+                      onClick={() => {
+                        // TODO: get password from API
+                        setCurrentRoomPassword(room.password)
+                        setCurrentRoomSize(room.size)
+                        setCurrentRoomId(room.roomId)
+                        toggleEdit()
+                      }}
+                      size="sm"
+                      className="ml-2 border-0"
+                    >
+                      <BsPencil />
+                    </Button>
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+          ))}
         </Row>
       </PageContainer>
       {!!currentRoomChat && <Chat roomId={currentRoomChat} />}
