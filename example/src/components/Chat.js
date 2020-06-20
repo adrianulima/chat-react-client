@@ -82,70 +82,51 @@ const Chat = ({ roomId }) => {
   }
 
   return (
-    <div>
-      <ChatWrapper>
-        <ChatButton
-          onClick={() => {
-            setOpen(!open)
-          }}
-        >
-          {!open && <ChatBadge count="99" />}
-          {open ? (
-            <BsXCircleFill size="20px" />
-          ) : (
-            <BsChatDotsFill size="20px" />
-          )}
-        </ChatButton>
-        {open && (
-          <ChatWindow>
-            <ChatWindowHeader
-              style={{
-                padding: '10px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
+    <ChatWrapper>
+      <ChatButton onClick={() => setOpen(!open)}>
+        {!open && <ChatBadge count="99" />}
+        {open ? <BsXCircleFill size="20px" /> : <BsChatDotsFill size="20px" />}
+      </ChatButton>
+      {open && (
+        <ChatWindow>
+          <ChatWindowHeader
+            style={{
+              padding: '10px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            Room: #{roomId}
+            <Button
+              color="secondary"
+              onClick={() => setShowMessages(!showMessages)}
             >
-              Room: #{roomId}
-              <Button
-                color="secondary"
-                onClick={() => {
-                  setShowMessages(!showMessages)
-                }}
-              >
-                {showMessages ? 'Show Users' : 'Show Messages'}
-              </Button>
-            </ChatWindowHeader>
-            <ChatWindowBody>
-              {showMessages ? (
-                <ChatMessagesContainer>
-                  {map(messages, (message) => {
-                    return (
-                      <ChatMessagesItem
-                        key={message.messageId}
-                        timestamp={message.timestamp}
-                        userName={message.user.userName}
-                        text={message.text}
-                        mine={message.mine}
-                        quick={message.quick}
-                        onClickUser={getUserClickCallback(message.user.userId)}
-                      />
-                    )
-                  })}
-                </ChatMessagesContainer>
-              ) : (
-                <ChatUsersContainer
-                  users={users}
-                  onClickUser={(user) => {
-                    return user
-                  }}
-                />
-              )}
-            </ChatWindowBody>
-          </ChatWindow>
-        )}
-      </ChatWrapper>
-    </div>
+              {showMessages ? 'Show Users' : 'Show Messages'}
+            </Button>
+          </ChatWindowHeader>
+          <ChatWindowBody>
+            {showMessages ? (
+              <ChatMessagesContainer>
+                {map(messages, (message) => (
+                  <ChatMessagesItem
+                    key={message.messageId}
+                    timestamp={message.timestamp}
+                    userName={message.user.userName}
+                    text={message.text}
+                    mine={message.mine}
+                    quick={message.quick}
+                    onClickUser={getUserClickCallback(message.user.userId)}
+                  />
+                ))}
+              </ChatMessagesContainer>
+            ) : (
+              <ChatUsersContainer users={users} onClickUser={(user) => user} />
+            )}
+          </ChatWindowBody>
+        </ChatWindow>
+      )}
+    </ChatWrapper>
   )
 }
 

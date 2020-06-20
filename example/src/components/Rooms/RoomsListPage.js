@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import PageContainer from './PageContainer'
-import { Row, Col, Button, Card, CardBody } from 'reactstrap'
-import {
-  BsFillLockFill,
-  BsFillUnlockFill,
-  BsPencil,
-  BsTrash,
-} from 'react-icons/bs'
-import ModalNewRoom from './components/modals/ModalNewRoom'
-import ModalDeleteRoom from './components/modals/ModalDeleteRoom'
+import PageContainer from '../PageContainer'
+import { Row, Col, Button } from 'reactstrap'
+import ModalNewRoom from './modals/ModalNewRoom'
+import ModalDeleteRoom from './modals/ModalDeleteRoom'
 import { map } from 'lodash'
 import { ChatApiHandler, apiErrorHandler } from 'chat-react-client'
-import ModalEnterRoom from './components/modals/ModalEnterRoom'
-import Chat from './Chat'
+import ModalEnterRoom from './modals/ModalEnterRoom'
+import Chat from '../Chat'
+import RoomCard from './RoomCard'
 
 const chatApi = ChatApiHandler()
+const defaultRoomSize = '4'
 
 const RoomsListPage = () => {
   const [isNewModalOpen, setIsNewModalOpen] = useState(false)
@@ -27,7 +23,7 @@ const RoomsListPage = () => {
   const toggleEdit = () => setIsEditModalOpen(!isEditModalOpen)
   const toggleEnter = () => setIsEnterModalOpen(!isEnterModalOpen)
 
-  const [currentRoomSize, setCurrentRoomSize] = useState('4')
+  const [currentRoomSize, setCurrentRoomSize] = useState(defaultRoomSize)
   const [currentRoomPassword, setCurrentRoomPassword] = useState('')
   const [currentRoomProtected, setCurrentRoomProtected] = useState(false)
   const [currentRoomId, setCurrentRoomId] = useState('')
@@ -49,16 +45,23 @@ const RoomsListPage = () => {
       .catch(apiErrorHandler)
 
     setIsNewModalOpen(false)
-    setCurrentRoomSize('4')
+    setCurrentRoomSize(defaultRoomSize)
     setCurrentRoomPassword('')
+  }
+
+  const editRoom = () => {
+    // TODO: Send edited room to API
+
+    setIsEditModalOpen(false)
+    setCurrentRoomSize(defaultRoomSize)
+    setCurrentRoomPassword('')
+    setCurrentRoomId('')
   }
 
   const updateRooms = () =>
     chatApi
       .getRooms()
-      .then((rooms) => {
-        setRoomsList(rooms.list)
-      })
+      .then((rooms) => setRoomsList(rooms.list))
       .catch(apiErrorHandler)
 
   const enterRoom = () =>
@@ -89,6 +92,21 @@ const RoomsListPage = () => {
 
     setIsDeleteModalOpen(false)
     setCurrentRoomId('')
+  }
+
+  const roomConnectModal = (room) => {
+    setCurrentRoomId(room.roomId)
+    setCurrentRoomProtected(room.protected)
+    const roomInfo = localStorage.getItem(room.roomId)
+    if (roomInfo) {
+      const roomObject = JSON.parse(roomInfo)
+      setCurrentRoomPassword(roomObject.password)
+      setCurrentUserName(roomObject.user.userName)
+    } else {
+      setCurrentUserName('')
+      setCurrentRoomPassword('')
+    }
+    toggleEnter()
   }
 
   return (
@@ -129,18 +147,7 @@ const RoomsListPage = () => {
             roomId={currentRoomId}
             onSizeChange={setCurrentRoomSize}
             onPasswordChange={setCurrentRoomPassword}
-            onSubmit={() => {
-              // console.log({
-              //   size: currentRoomSize,
-              //   password:
-              //     currentRoomPassword !== '' ? currentRoomPassword : undefined,
-              //   roomId: currentRoomId,
-              // })
-              setIsEditModalOpen(false)
-              setCurrentRoomSize('4')
-              setCurrentRoomPassword('')
-              setCurrentRoomId('')
-            }}
+            onSubmit={editRoom}
           />
           <ModalEnterRoom
             isOpen={isEnterModalOpen}
@@ -156,75 +163,24 @@ const RoomsListPage = () => {
         <Row>
           {map(roomsList, (room) => (
             <Col key={room.roomId} lg="4" md="6" sm="12" className="mb-4">
-              <Card className="bg-light">
-                <CardBody className="p-2">
-                  <Row>
-                    <Col>
-                      <h4
-                        className="m-0"
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => {
-                          setCurrentRoomId(room.roomId)
-                          setCurrentRoomProtected(room.protected)
-                          const roomInfo = localStorage.getItem(room.roomId)
-                          if (roomInfo) {
-                            const roomObject = JSON.parse(roomInfo)
-                            setCurrentRoomPassword(roomObject.password)
-                            setCurrentUserName(roomObject.user.userName)
-                          } else {
-                            setCurrentUserName('')
-                            setCurrentRoomPassword('')
-                          }
-                          toggleEnter()
-                        }}
-                      >
-                        #{room.roomId}
-                      </h4>
-                    </Col>
-                    <Col className="text-right">
-                      {room.protected ? (
-                        <BsFillLockFill size="16px" />
-                      ) : (
-                        <BsFillUnlockFill color="gray" size="16px" />
-                      )}
-                    </Col>
-                  </Row>
-                </CardBody>
-                <Row className="p-1 pl-2">
-                  <Col className="d-flex align-items-center">
-                    Users: {room.usersCount}/{room.size}
-                  </Col>
-                  <Col className="text-right">
-                    <Button
-                      outline
-                      color="danger"
-                      onClick={() => {
-                        setCurrentRoomId(room.roomId)
-                        toggleDelete()
-                      }}
-                      size="sm"
-                      className="ml-2 border-0"
-                    >
-                      <BsTrash />
-                    </Button>
-                    <Button
-                      outline
-                      color="primary"
-                      onClick={() => {
-                        // TODO: get password from API
-                        setCurrentRoomPassword(room.password)
-                        setCurrentRoomSize(room.size)
-                        setCurrentRoomId(room.roomId)
-                        toggleEdit()
-                      }}
-                      size="sm"
-                      className="ml-2 border-0"
-                    >
-                      <BsPencil />
-                    </Button>
-                  </Col>
-                </Row>
-              </Card>
+              <RoomCard
+                roomId={room.roomId}
+                isProtected={room.protected}
+                usersCount={room.usersCount}
+                size={room.size}
+                onClickRoomId={() => roomConnectModal(room)}
+                onClickDelete={() => {
+                  setCurrentRoomId(room.roomId)
+                  toggleDelete()
+                }}
+                onClickEdit={() => {
+                  // TODO: get password from API
+                  setCurrentRoomPassword(room.password)
+                  setCurrentRoomSize(room.size)
+                  setCurrentRoomId(room.roomId)
+                  toggleEdit()
+                }}
+              />
             </Col>
           ))}
         </Row>

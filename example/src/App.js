@@ -1,8 +1,6 @@
 import React from 'react'
-import RoomsListPage from './RoomsListPage'
+import RoomsListPage from './components/Rooms/RoomsListPage'
 
-const App = () => {
-  return <RoomsListPage />
-}
+const App = () => <RoomsListPage />
 
 export default App
