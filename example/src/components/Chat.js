@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {
   ChatButton,
   ChatWindow,
-  ChatWindowHeader,
+  ChatWindowRow,
   ChatWindowBody,
   ChatTextField,
   ChatWrapper,
@@ -83,6 +83,12 @@ const Chat = ({ roomId }) => {
       }
   }
 
+  const sendMessageText = () => {
+    // TODO: Send message to API
+
+    setValueTextField('')
+  }
+
   return (
     <ChatWrapper>
       <ChatButton onClick={() => setOpen(!open)}>
@@ -91,7 +97,7 @@ const Chat = ({ roomId }) => {
       </ChatButton>
       {open && (
         <ChatWindow>
-          <ChatWindowHeader>
+          <ChatWindowRow>
             Room: #{roomId}
             <ButtonGroup size="sm">
               <Button
@@ -107,7 +113,7 @@ const Chat = ({ roomId }) => {
                 <BsFillPeopleFill />
               </Button>
             </ButtonGroup>
-          </ChatWindowHeader>
+          </ChatWindowRow>
           <ChatWindowBody>
             {showMessages ? (
               <ChatMessagesContainer>
@@ -127,27 +133,21 @@ const Chat = ({ roomId }) => {
               <ChatUsersContainer users={users} onClickUser={(user) => user} />
             )}
           </ChatWindowBody>
-          <ChatWindowHeader>
+          <ChatWindowRow>
             <ChatTextField
+              value={valueTextField}
               placeholder="Send a message"
-              onPressEnter={(value) => {
-                setValueTextField(value)
-                console.log(`Usando enter: O texto é ${valueTextField}`)
-              }}
-              onChange={(event) => {
-                setValueTextField(event.target.value)
-              }}
+              onPressEnter={sendMessageText}
+              onChange={setValueTextField}
             />
             <Button
-              onClick={() => {
-                console.log(`Usando botão: O texto é ${valueTextField}`)
-              }}
+              onClick={sendMessageText}
               size="sm"
               style={{ fontSize: 12, height: 30, marginLeft: 8 }}
             >
               Send
             </Button>
-          </ChatWindowHeader>
+          </ChatWindowRow>
         </ChatWindow>
       )}
     </ChatWrapper>

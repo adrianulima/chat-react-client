@@ -1,7 +1,7 @@
 export { default as ChatWindow } from './components/ChatWindow'
 export { default as ChatButton } from './components/ChatButton'
 export { default as ChatWrapper } from './components/ChatWrapper'
-export { default as ChatWindowHeader } from './components/ChatWindowHeader'
+export { default as ChatWindowRow } from './components/ChatWindowRow'
 export { default as ChatWindowBody } from './components/ChatWindowBody'
 export { default as ChatTextField } from './components/ChatTextField'
 export { default as ChatMessagesContainer } from './components/ChatMessagesContainer'

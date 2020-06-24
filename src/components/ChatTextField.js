@@ -9,7 +9,7 @@ const ChatTextField = ({
 }) => (
   <input
     className={styles['chat-text-field']}
-    onChange={onChange}
+    onChange={(event) => onChange(event.target.value)}
     onKeyPress={(event) =>
       onPressEnter &&
       event.key === 'Enter' &&
