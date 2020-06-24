@@ -4,6 +4,7 @@ import {
   ChatWindow,
   ChatWindowHeader,
   ChatWindowBody,
+  ChatTextField,
   ChatWrapper,
   ChatMessagesContainer,
   ChatMessagesItem,
@@ -17,6 +18,7 @@ import { map, find } from 'lodash'
 const Chat = ({ roomId }) => {
   const [open, setOpen] = useState(false)
   const [showMessages, setShowMessages] = useState(true)
+  const [valueTextField, setValueTextField] = useState('')
 
   const users = [{ userId: 1, name: 'Ciclano' }]
   const messages = [
@@ -89,14 +91,7 @@ const Chat = ({ roomId }) => {
       </ChatButton>
       {open && (
         <ChatWindow>
-          <ChatWindowHeader
-            style={{
-              padding: '10px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
+          <ChatWindowHeader>
             Room: #{roomId}
             <ButtonGroup size="sm">
               <Button
@@ -132,6 +127,27 @@ const Chat = ({ roomId }) => {
               <ChatUsersContainer users={users} onClickUser={(user) => user} />
             )}
           </ChatWindowBody>
+          <ChatWindowHeader>
+            <ChatTextField
+              placeholder="Send a message"
+              onPressEnter={(value) => {
+                setValueTextField(value)
+                console.log(`Usando enter: O texto é ${valueTextField}`)
+              }}
+              onChange={(event) => {
+                setValueTextField(event.target.value)
+              }}
+            />
+            <Button
+              onClick={() => {
+                console.log(`Usando botão: O texto é ${valueTextField}`)
+              }}
+              size="sm"
+              style={{ fontSize: 12, height: 30, marginLeft: 8 }}
+            >
+              Send
+            </Button>
+          </ChatWindowHeader>
         </ChatWindow>
       )}
     </ChatWrapper>
