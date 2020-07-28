@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   ChatButton,
   ChatWindow,
@@ -10,17 +10,32 @@ import {
   ChatMessagesItem,
   ChatUsersContainer,
   ChatBadge,
+  ChatApiHandler,
+  apiErrorHandler,
 } from 'chat-react-client'
 import { BsChatDotsFill, BsXCircleFill, BsFillPeopleFill } from 'react-icons/bs'
 import { Button, ButtonGroup } from 'reactstrap'
 import { map, find } from 'lodash'
 
+const chatApi = ChatApiHandler()
+
 const Chat = ({ roomId }) => {
   const [open, setOpen] = useState(false)
   const [showMessages, setShowMessages] = useState(true)
   const [valueTextField, setValueTextField] = useState('')
+  const [roomUsers, setRoomUsers] = useState([])
 
-  const users = [{ userId: 1, name: 'Ciclano' }]
+  useEffect(() => {
+    if (open) {
+      chatApi
+        .getRoomUsers(roomId)
+        .then((users) => {
+          setRoomUsers(users.list)
+        })
+        .catch(apiErrorHandler)
+    }
+  }, [roomId, open])
+
   const messages = [
     {
       messageId: 1,
@@ -75,11 +90,11 @@ const Chat = ({ roomId }) => {
   ]
 
   const getUserClickCallback = (userId) => {
-    const u = find(users, (user) => user.userId === userId)
+    const u = find(roomUsers, (user) => user.userId === userId)
 
     if (u)
       return (user) => {
-        // console.log(user.userName)
+        console.log(user.userName)
       }
   }
 
@@ -130,7 +145,10 @@ const Chat = ({ roomId }) => {
                 ))}
               </ChatMessagesContainer>
             ) : (
-              <ChatUsersContainer users={users} onClickUser={(user) => user} />
+              <ChatUsersContainer
+                users={roomUsers}
+                onClickUser={(user) => user}
+              />
             )}
           </ChatWindowBody>
           <ChatWindowRow>

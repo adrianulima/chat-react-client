@@ -79,6 +79,7 @@ const RoomsListPage = () => {
             password: currentRoomPassword,
           })
         )
+        updateRooms()
         setCurrentRoomChat(currentRoomId)
         setIsEnterModalOpen(false)
       })
