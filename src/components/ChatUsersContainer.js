@@ -13,7 +13,7 @@ const ChatUsersContainer = ({
           className={styles['chat-users-item-text']}
           onClick={() => onClickUser(user)}
         >
-          {user.name}
+          {user.userName}
         </span>
       </div>
     ))}
